@@ -1,0 +1,90 @@
+# FastAPI Core
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Database
+asyncpg==0.29.0
+sqlalchemy==2.0.23
+alembic==1.12.1
+psycopg2-binary==2.9.9
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+bcrypt==4.1.1
+
+# JWT Token
+PyJWT==2.8.0
+
+# Password Hashing
+argon2-cffi==23.1.0
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# CORS
+fastapi-cors==0.0.6
+
+# Email Validation
+email-validator==2.1.0
+
+# HTTP Client (for testing/external APIs)
+httpx==0.25.2
+
+# Date/Time Utilities
+python-dateutil==2.8.2
+
+# Logging
+loguru==0.7.2
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+
+# Database Testing
+faker==20.1.0
+
+# Type Checking
+mypy==1.7.1
+types-passlib==1.7.7.13
+types-python-jose==3.3.4.8
+
+# Code Quality
+black==23.11.0
+flake8==6.1.0
+isort==5.12.0
+
+# API Documentation
+markdown==3.5.1
+
+# Async Support
+anyio==4.1.0
+
+# Data Validation
+validators==0.22.0
+
+# Timezone Support
+pytz==2023.3.post1
+
+# UUID Generation
+uuid==1.30
+
+# Rate Limiting
+slowapi==0.1.9
+
+# Caching (optional but recommended)
+redis==5.0.1
+hiredis==2.2.3
+
+# Background Tasks
+celery==5.3.4
+
+# Monitoring
+prometheus-client==0.19.0
+
+# JSON Web Tokens
+cryptography==41.0.7

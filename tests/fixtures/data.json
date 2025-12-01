@@ -1,0 +1,10 @@
+{
+  "testData": {
+    "users": [
+      {"id": 1, "name": "Test User", "email": "test@example.com"}
+    ],
+    "posts": [
+      {"id": 1, "title": "Test Post", "content": "Test content"}
+    ]
+  }
+}

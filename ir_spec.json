@@ -1,0 +1,660 @@
+{
+  "version": "1.0",
+  "brief": "  Build a task management API with user authentication, task CRUD operations, and PostgreSQL database\n",
+  "app": {
+    "name": "General Api",
+    "description": "build a task management api with user authentication, task crud operations, and postgresql database",
+    "type": "api",
+    "domain": "general",
+    "stack": {
+      "backend": {
+        "language": "python",
+        "framework": "fastapi",
+        "libraries": [],
+        "runtime": "docker"
+      },
+      "frontend": {
+        "language": "typescript",
+        "framework": "react",
+        "libraries": [
+          "@tanstack/react-query",
+          "react-router-dom"
+        ],
+        "build": "vite"
+      },
+      "database": {
+        "type": "postgresql",
+        "version": "15",
+        "features": [
+          "migrations",
+          "indexes"
+        ]
+      },
+      "cache": {
+        "type": "",
+        "version": ""
+      }
+    },
+    "features": [
+      {
+        "name": "Todo/Task Management",
+        "description": "Interactive todo list with add, complete, delete, and filter functionality",
+        "type": "todo",
+        "priority": "high",
+        "dependencies": null,
+        "entities": null,
+        "operations": [
+          "add_task",
+          "complete_task",
+          "delete_task",
+          "filter_tasks",
+          "edit_task"
+        ]
+      },
+      {
+        "name": "User Authentication",
+        "description": "User registration, login, and authentication",
+        "type": "auth",
+        "priority": "high",
+        "dependencies": null,
+        "entities": null,
+        "operations": [
+          "register",
+          "login",
+          "logout",
+          "verify"
+        ]
+      },
+      {
+        "name": "CRUD Operations",
+        "description": "Create, read, update, and delete operations",
+        "type": "crud",
+        "priority": "high",
+        "dependencies": null,
+        "entities": null,
+        "operations": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      },
+      {
+        "name": "API Services",
+        "description": "RESTful API endpoints and services",
+        "type": "api",
+        "priority": "high",
+        "dependencies": null,
+        "entities": null,
+        "operations": [
+          "get",
+          "post",
+          "put",
+          "delete"
+        ]
+      }
+    ],
+    "scale": {
+      "users": {
+        "initial": 100,
+        "peak": 1000,
+        "growth": 50
+      },
+      "requests": {
+        "initial": 1000,
+        "peak": 10000,
+        "growth": 100
+      },
+      "storage": {
+        "initial": 1,
+        "peak": 100,
+        "growth": 200
+      },
+      "latency": "500ms",
+      "uptime": "99.9%",
+      "concurrency": 100
+    }
+  },
+  "non_functionals": {
+    "security": {
+      "authentication": [
+        "jwt"
+      ],
+      "authorization": [
+        "rbac"
+      ],
+      "encryption": [
+        "tls",
+        "bcrypt"
+      ],
+      "audit": false,
+      "compliance": null
+    },
+    "performance": {
+      "response_time": "500ms",
+      "throughput": "1000rps",
+      "memory": "512MB",
+      "cpu": "2cores"
+    },
+    "compliance": {
+      "standards": [
+        "gdpr"
+      ],
+      "data_retention": "7years",
+      "audit_log": false
+    },
+    "monitoring": {
+      "metrics": [
+        "cpu",
+        "memory",
+        "requests",
+        "errors"
+      ],
+      "logging": "structured",
+      "tracing": false,
+      "alerts": []
+    }
+  },
+  "api": {
+    "type": "rest",
+    "version": "v1",
+    "base_url": "/api/v1",
+    "auth": {
+      "type": "bearer",
+      "scopes": null,
+      "required": true
+    },
+    "endpoints": [
+      {
+        "path": "/user",
+        "method": "GET",
+        "summary": "List User",
+        "description": "Retrieve a list of User",
+        "parameters": null,
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": "UserList"
+          }
+        },
+        "auth": true
+      },
+      {
+        "path": "/user/{id}",
+        "method": "GET",
+        "summary": "Get User",
+        "description": "Retrieve a specific User by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": "User"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "auth": true
+      },
+      {
+        "path": "/user",
+        "method": "POST",
+        "summary": "Create User",
+        "description": "Create a new User",
+        "parameters": null,
+        "request_body": {
+          "required": true,
+          "content_type": "application/json",
+          "schema": "CreateUser"
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": "User"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "auth": true
+      },
+      {
+        "path": "/user/{id}",
+        "method": "PUT",
+        "summary": "Update User",
+        "description": "Update an existing User",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": ""
+          }
+        ],
+        "request_body": {
+          "required": true,
+          "content_type": "application/json",
+          "schema": "UpdateUser"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "schema": "User"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "auth": true
+      },
+      {
+        "path": "/user/{id}",
+        "method": "DELETE",
+        "summary": "Delete User",
+        "description": "Delete a User",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": ""
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "auth": true
+      }
+    ],
+    "schemas": [
+      {
+        "name": "User",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": ""
+          },
+          "email": {
+            "type": "string",
+            "description": ""
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          },
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "password_hash": {
+            "type": "string",
+            "description": ""
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": ""
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "name",
+          "password_hash",
+          "created_at",
+          "updated_at"
+        ],
+        "description": "User entity"
+      },
+      {
+        "name": "CreateUser",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": ""
+          },
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "password_hash": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": [
+          "email",
+          "name",
+          "password_hash"
+        ],
+        "description": "Create user request"
+      },
+      {
+        "name": "UpdateUser",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": ""
+          },
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "password_hash": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": [],
+        "description": "Update user request"
+      },
+      {
+        "name": "UserList",
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "object",
+              "description": "",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": ""
+                },
+                "name": {
+                  "type": "string",
+                  "description": ""
+                }
+              }
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total count"
+          }
+        },
+        "required": [
+          "data",
+          "total"
+        ],
+        "description": "User list response"
+      }
+    ],
+    "config": {
+      "cors": true,
+      "compression": true,
+      "versioning": "path",
+      "pagination": "offset"
+    }
+  },
+  "data": {
+    "entities": [
+      {
+        "name": "User",
+        "description": "User entity",
+        "fields": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "required": true,
+            "unique": true,
+            "validation": null,
+            "description": ""
+          },
+          {
+            "name": "email",
+            "type": "string",
+            "required": true,
+            "unique": true,
+            "validation": null,
+            "description": ""
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "unique": false,
+            "validation": null,
+            "description": ""
+          },
+          {
+            "name": "password_hash",
+            "type": "string",
+            "required": true,
+            "unique": false,
+            "validation": null,
+            "description": ""
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "required": true,
+            "unique": false,
+            "validation": null,
+            "description": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp",
+            "required": true,
+            "unique": false,
+            "validation": null,
+            "description": ""
+          }
+        ],
+        "constraints": [
+          {
+            "type": "primary_key",
+            "fields": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "relationships": [],
+    "migrations": [],
+    "seeds": [],
+    "indexes": [],
+    "config": {
+      "migrations": true,
+      "seeds": true,
+      "soft_delete": false,
+      "timestamps": true
+    }
+  },
+  "ui": {
+    "type": "",
+    "pages": null,
+    "components": null,
+    "theme": {
+      "primary": "",
+      "secondary": "",
+      "style": ""
+    },
+    "config": {
+      "responsive": false,
+      "pwa": false,
+      "i18n": false
+    }
+  },
+  "ops": {
+    "environment": [
+      {
+        "name": "development",
+        "url": "",
+        "provider": "docker",
+        "region": "local",
+        "config": null
+      },
+      {
+        "name": "staging",
+        "url": "",
+        "provider": "k8s",
+        "region": "us-east-1",
+        "config": null
+      },
+      {
+        "name": "production",
+        "url": "",
+        "provider": "k8s",
+        "region": "us-east-1",
+        "config": null
+      }
+    ],
+    "ci_cd": {
+      "provider": "github",
+      "triggers": [
+        "push",
+        "pr"
+      ],
+      "stages": [
+        "test",
+        "build",
+        "deploy"
+      ]
+    },
+    "monitoring": {
+      "provider": "prometheus",
+      "dashboards": [
+        "overview",
+        "performance",
+        "errors"
+      ],
+      "alerts": [
+        "high_error_rate",
+        "high_latency"
+      ]
+    },
+    "backup": {
+      "frequency": "daily",
+      "retention": "30d",
+      "provider": "s3"
+    },
+    "scaling": {
+      "type": "horizontal",
+      "min": 2,
+      "max": 10,
+      "triggers": [
+        "cpu",
+        "memory"
+      ]
+    },
+    "config": {
+      "ssl": true,
+      "cdn": true,
+      "load_balancer": true
+    }
+  },
+  "acceptance": [
+    {
+      "id": "functional-001",
+      "description": "All API endpoints return proper HTTP status codes",
+      "type": "functional",
+      "priority": "must",
+      "testable": true,
+      "automated": true
+    },
+    {
+      "id": "security-001",
+      "description": "All endpoints require proper authentication",
+      "type": "security",
+      "priority": "must",
+      "testable": true,
+      "automated": true
+    },
+    {
+      "id": "performance-001",
+      "description": "API response time is under 500ms for 95% of requests",
+      "type": "performance",
+      "priority": "should",
+      "testable": true,
+      "automated": true
+    }
+  ],
+  "questions": [
+    {
+      "id": "domain-001",
+      "question": "What is the primary domain or industry for this application?",
+      "context": "This helps determine appropriate features and compliance requirements",
+      "type": "business",
+      "options": [
+        "ecommerce",
+        "fintech",
+        "healthcare",
+        "education",
+        "social",
+        "business"
+      ],
+      "required": false
+    },
+    {
+      "id": "compliance-001",
+      "question": "Are there any specific compliance requirements (GDPR, HIPAA, PCI, etc.)?",
+      "context": "This affects data handling, security measures, and audit requirements",
+      "type": "security",
+      "options": [
+        "none",
+        "gdpr",
+        "hipaa",
+        "pci-dss",
+        "sox"
+      ],
+      "required": false
+    }
+  ],
+  "metadata": {
+    "created_at": "2025-12-01T14:52:05.614834039Z",
+    "updated_at": "2025-12-01T14:52:05.614834079Z",
+    "version": "1.0",
+    "confidence": 0.75,
+    "completeness": 1,
+    "tags": [
+      "api",
+      "crud",
+      "complexity:medium",
+      "cfs_goal:User registration endpoint with email and password",
+      "cfs_goal:User login endpoint returning authentication token",
+      "cfs_goal:User logout endpoint to invalidate token",
+      "cfs_goal:Create task endpoint with title, description, and status fields",
+      "cfs_goal:Get all tasks endpoint with user authentication",
+      "cfs_goal:Get single task by ID endpoint",
+      "cfs_goal:Update task endpoint to modify title, description, or status",
+      "cfs_goal:Delete task endpoint with authentication check",
+      "cfs_goal:PostgreSQL database schema with users table",
+      "cfs_goal:PostgreSQL database schema with tasks table",
+      "cfs_goal:JWT token-based authentication middleware",
+      "cfs_goal:Password hashing for secure storage",
+      "cfs_goal:Authorization check ensuring users only access their own tasks",
+      "cfs_goal:Input validation for all API endpoints",
+      "cfs_goal:Error handling with appropriate HTTP status codes",
+      "cfs_constraint:user authentication required",
+      "cfs_constraint:PostgreSQL database integration required",
+      "unified_intent_confidence:0.90"
+    ],
+    "source": "ai"
+  }
+}
